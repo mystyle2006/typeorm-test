@@ -93,3 +93,6 @@ FROM `user` `User`
          LEFT JOIN `photo` `User__User_photos` ON `User__User_photos`.`userId` = `User`.`id`
 WHERE `User`.`id` IN (2, 3)
 ```
+
+## in 절에 데이터가 많을 경우??
+- https://hoing.io/archives/24493
