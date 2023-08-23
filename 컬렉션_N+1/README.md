@@ -10,6 +10,42 @@
 
 - 페이지네이션 처리 존재
 
+## lazy load 시
+```sql
+SELECT `User`.`id` AS `User_id`, `User`.`userName` AS `User_userName`
+FROM `user` `User`;
+
+SELECT `photos`.`id`          AS `photos_id`,
+       `photos`.`name`        AS `photos_name`,
+       `photos`.`description` AS `photos_description`,
+       `photos`.`filename`    AS `photos_filename`,
+       `photos`.`views`       AS `photos_views`,
+       `photos`.`isPublished` AS `photos_isPublished`,
+       `photos`.`userId`      AS `photos_userId`
+FROM `photo` `photos`
+WHERE `photos`.`userId` IN (1);
+
+SELECT `photos`.`id`          AS `photos_id`,
+       `photos`.`name`        AS `photos_name`,
+       `photos`.`description` AS `photos_description`,
+       `photos`.`filename`    AS `photos_filename`,
+       `photos`.`views`       AS `photos_views`,
+       `photos`.`isPublished` AS `photos_isPublished`,
+       `photos`.`userId`      AS `photos_userId`
+FROM `photo` `photos`
+WHERE `photos`.`userId` IN (3);
+    
+SELECT `photos`.`id`          AS `photos_id`,
+       `photos`.`name`        AS `photos_name`,
+       `photos`.`description` AS `photos_description`,
+       `photos`.`filename`    AS `photos_filename`,
+       `photos`.`views`       AS `photos_views`,
+       `photos`.`isPublished` AS `photos_isPublished`,
+       `photos`.`userId`      AS `photos_userId`
+FROM `photo` `photos`
+WHERE `photos`.`userId` IN (2);
+```
+
 ## relations 옵션을 활용했을 경우
 
 - 페이지네이션이 없을 경우 `photos` 를 `left join` 으로 통으로 가져옴

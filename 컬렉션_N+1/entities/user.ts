@@ -10,5 +10,5 @@ export class User {
   userName: string;
 
   @OneToMany(() => Photo, (photo) => photo.user, { cascade: true })
-  photos: Photo[];
+  photos: Promise<Photo[]>;
 }

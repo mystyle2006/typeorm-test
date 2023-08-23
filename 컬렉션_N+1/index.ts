@@ -37,7 +37,7 @@ const generateMock = async () => {
   userAPhoto2.views = 3;
   userAPhoto2.isPublished = true;
 
-  userA.photos = [userAPhoto1, userAPhoto2];
+  userA.photos = Promise.resolve([userAPhoto1, userAPhoto2]);
 
   await AppDataSource.manager.save(userA);
 
@@ -59,7 +59,7 @@ const generateMock = async () => {
   userBPhoto2.views = 3;
   userBPhoto2.isPublished = true;
 
-  userB.photos = [userBPhoto1, userBPhoto2];
+  userB.photos = Promise.resolve([userBPhoto1, userBPhoto2]);
 
   await AppDataSource.manager.save(userB);
 
@@ -81,7 +81,7 @@ const generateMock = async () => {
   userCPhoto2.views = 3;
   userCPhoto2.isPublished = true;
 
-  userC.photos = [userCPhoto1, userCPhoto2];
+  userC.photos = Promise.resolve([userCPhoto1, userCPhoto2]);
 
   await AppDataSource.manager.save(userC);
 };
@@ -98,9 +98,20 @@ const getUsers = async () => {
   console.log(user);
 };
 
+const getUsersWithLazyLoad = async () => {
+  console.info('------------------------ 조회 시작');
+  const user = await AppDataSource.manager.find(User);
+  const userWithPhoto = await Promise.all(user.map(async u => {
+    await u.photos;
+    return u;
+  }));
+
+  console.log(userWithPhoto);
+};
+
 AppDataSource.initialize()
   .then(async () => {
     await generateMock();
-    await getUsers();
+    await getUsersWithLazyLoad();
   })
   .catch((error) => console.log(error));
